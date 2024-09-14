@@ -68,6 +68,20 @@ To import this dataset into Neo4j, you can use either the `cypher-shell` or `neo
 ./cypher-shell -u neo4j -p "$NEO4J_PASSWORD" -f example/geo/insert_geo_data.cypher
 ```
 
+example queries (can also be run in web browser under <http://localhost:7474> ):
+
+```
+./cypher-shell "MATCH (c:Continent) RETURN c;"
+
+./cypher-shell -u neo4j -p test -a bolt://localhost:7687 "MATCH (c:Continent) RETURN c;"
+
+./cypher-shell "MATCH (c:Country)-[:LOCATED_IN]->(cont:Continent {name: 'Africa'}) RETURN c;"
+
+# display all nodes and relationships:
+./cypher-shell "MATCH (n)-[r]->(m) RETURN n, r, m;"
+
+```
+
 ## Accessing Neo4j
 
 - Browser interface: http://localhost:7474
