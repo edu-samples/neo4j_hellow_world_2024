@@ -47,8 +47,10 @@ make stop
 
 ## Default Credentials
 
-* Username: neo4j
-* Password: test
+```
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=test
+```
 
 You can modify these in the Makefile by changing the `NEO4J_USER` and `NEO4J_PASSWORD` variables.
 
@@ -61,7 +63,8 @@ To import this dataset into Neo4j, you can use either the `cypher-shell` or `neo
 Using `cypher-shell`:
 
 ```
-./cypher-shell -u neo4j -p your_password -f example/geo/geo.import.cypher
+NEO4J_PASSWORD=test
+./cypher-shell -u neo4j -p "$NEO4J_PASSWORD" -f example/geo/geo.import.cypher
 ```
 
 Using `neo4j-admin`:
