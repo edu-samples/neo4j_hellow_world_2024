@@ -4,7 +4,7 @@ all: run-quick # Default target
 
 # Neo4j authentication variables
 NEO4J_USER := neo4j
-NEO4J_PASSWORD := neo4j
+NEO4J_PASSWORD := test
 
 
 # Quick start: Run Neo4j with default settings and custom auth
