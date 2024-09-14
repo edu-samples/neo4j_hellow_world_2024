@@ -82,6 +82,8 @@ example queries (can also be run in web browser under <http://localhost:7474> ):
 
 ```
 
+More interesting queries in `example/geo/example_queries.md`.
+
 ## Accessing Neo4j
 
 - Browser interface: http://localhost:7474

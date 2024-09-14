@@ -1,72 +1,63 @@
-// Creating Continents
-CREATE (:Continent {name: 'Africa'});
-CREATE (:Continent {name: 'Asia'});
-CREATE (:Continent {name: 'Europe'});
-CREATE (:Continent {name: 'South America'});
-CREATE (:Continent {name: 'North America'});
+// Add more continents
+CREATE (:Continent {name: 'Oceania'});
+CREATE (:Continent {name: 'Antarctica'});
 
-// Creating Countries
-CREATE (:Country {name: 'Kenya', population: 53700000});
-CREATE (:Country {name: 'Japan', population: 125800000});
-CREATE (:Country {name: 'Germany', population: 83200000});
-CREATE (:Country {name: 'Egypt', population: 104300000});
-CREATE (:Country {name: 'China', population: 1439300000});
-CREATE (:Country {name: 'Brazil', population: 212600000});
-CREATE (:Country {name: 'United States', population: 331000000});
+// Add more countries
+CREATE (:Country {name: 'Russia', population: 144100000});
+CREATE (:Country {name: 'Turkey', population: 84339067});
+CREATE (:Country {name: 'France', population: 67391582});
+CREATE (:Country {name: 'Sudan', population: 43849260});
+CREATE (:Country {name: 'Peru', population: 32971854});
 
-// Creating Cities
-CREATE (:City {name: 'Nairobi', population: 4397073});
-CREATE (:City {name: 'Tokyo', population: 37393128});
-CREATE (:City {name: 'Berlin', population: 3645000});
-CREATE (:City {name: 'Cairo', population: 20901000});
-CREATE (:City {name: 'Shanghai', population: 27058000});
-CREATE (:City {name: 'São Paulo', population: 22043028});
-CREATE (:City {name: 'New York City', population: 8804190});
+// Add more cities
+CREATE (:City {name: 'Moscow', population: 12506468});
+CREATE (:City {name: 'Istanbul', population: 15190336});
+CREATE (:City {name: 'Paris', population: 2161000});
+CREATE (:City {name: 'Khartoum', population: 5274321});
+CREATE (:City {name: 'Lima', population: 9674755});
 
-// Creating Rivers
-CREATE (:River {name: 'Nile', length: 6650});
-CREATE (:River {name: 'Amazon', length: 6400});
-CREATE (:River {name: 'Yangtze', length: 6300});
-CREATE (:River {name: 'Mississippi', length: 3766});
+// Add more rivers
+CREATE (:River {name: 'Danube', length: 2850});
+CREATE (:River {name: 'Congo', length: 4700});
 
-// Connecting Countries to Continents
-MATCH (c:Country {name: 'Kenya'}), (cont:Continent {name: 'Africa'})
-CREATE (c)-[:LOCATED_IN]->(cont);
-MATCH (c:Country {name: 'Japan'}), (cont:Continent {name: 'Asia'})
-CREATE (c)-[:LOCATED_IN]->(cont);
-MATCH (c:Country {name: 'Germany'}), (cont:Continent {name: 'Europe'})
-CREATE (c)-[:LOCATED_IN]->(cont);
-MATCH (c:Country {name: 'Egypt'}), (cont:Continent {name: 'Africa'})
-CREATE (c)-[:LOCATED_IN]->(cont);
-MATCH (c:Country {name: 'China'}), (cont:Continent {name: 'Asia'})
-CREATE (c)-[:LOCATED_IN]->(cont);
-MATCH (c:Country {name: 'Brazil'}), (cont:Continent {name: 'South America'})
-CREATE (c)-[:LOCATED_IN]->(cont);
-MATCH (c:Country {name: 'United States'}), (cont:Continent {name: 'North America'})
-CREATE (c)-[:LOCATED_IN]->(cont);
+// Connect countries to multiple continents
+MATCH (c:Country {name: 'Russia'}), (e:Continent {name: 'Europe'}), (a:Continent {name: 'Asia'})
+CREATE (c)-[:LOCATED_IN]->(e), (c)-[:LOCATED_IN]->(a);
 
-// Connecting Cities to Countries
-MATCH (city:City {name: 'Nairobi'}), (country:Country {name: 'Kenya'})
+MATCH (c:Country {name: 'Turkey'}), (e:Continent {name: 'Europe'}), (a:Continent {name: 'Asia'})
+CREATE (c)-[:LOCATED_IN]->(e), (c)-[:LOCATED_IN]->(a);
+
+MATCH (c:Country {name: 'France'}), (e:Continent {name: 'Europe'}), (sa:Continent {name: 'South America'})
+CREATE (c)-[:LOCATED_IN]->(e), (c)-[:LOCATED_IN]->(sa);
+
+// Connect new cities to countries
+MATCH (city:City {name: 'Moscow'}), (country:Country {name: 'Russia'})
 CREATE (city)-[:BELONGS_TO]->(country);
-MATCH (city:City {name: 'Tokyo'}), (country:Country {name: 'Japan'})
+MATCH (city:City {name: 'Istanbul'}), (country:Country {name: 'Turkey'})
 CREATE (city)-[:BELONGS_TO]->(country);
-MATCH (city:City {name: 'Berlin'}), (country:Country {name: 'Germany'})
+MATCH (city:City {name: 'Paris'}), (country:Country {name: 'France'})
 CREATE (city)-[:BELONGS_TO]->(country);
-MATCH (city:City {name: 'Cairo'}), (country:Country {name: 'Egypt'})
+MATCH (city:City {name: 'Khartoum'}), (country:Country {name: 'Sudan'})
 CREATE (city)-[:BELONGS_TO]->(country);
-MATCH (city:City {name: 'Shanghai'}), (country:Country {name: 'China'})
-CREATE (city)-[:BELONGS_TO]->(country);
-MATCH (city:City {name: 'São Paulo'}), (country:Country {name: 'Brazil'})
-CREATE (city)-[:BELONGS_TO]->(country);
-MATCH (city:City {name: 'New York City'}), (country:Country {name: 'United States'})
+MATCH (city:City {name: 'Lima'}), (country:Country {name: 'Peru'})
 CREATE (city)-[:BELONGS_TO]->(country);
 
-// Connecting Rivers to Countries
-MATCH (r:River {name: 'Nile'}), (c:Country {name: 'Egypt'})
-CREATE (r)-[:FLOWS_THROUGH]->(c);
-MATCH (r:River {name: 'Amazon'}), (c:Country {name: 'Brazil'})
-CREATE (r)-[:FLOWS_THROUGH]->(c);
-MATCH (r:River {name: 'Yangtze'}), (c:Country {name: 'China'})
-CREATE (r)-[:FLOWS_THROUGH]->(c);
-MATCH (r:River {name: 'Mississippi'}), (c:Country {name: 'United States'})
-CREATE (r)-[:FLOWS_THROUGH]->(c);
+// Connect rivers to multiple countries
+MATCH (r:River {name: 'Nile'}), (e:Country {name: 'Egypt'}), (s:Country {name: 'Sudan'})
+CREATE (r)-[:FLOWS_THROUGH]->(e), (r)-[:FLOWS_THROUGH]->(s);
+
+MATCH (r:River {name: 'Amazon'}), (b:Country {name: 'Brazil'}), (p:Country {name: 'Peru'})
+CREATE (r)-[:FLOWS_THROUGH]->(b), (r)-[:FLOWS_THROUGH]->(p);
+
+MATCH (r:River {name: 'Danube'}), (g:Country {name: 'Germany'})
+CREATE (r)-[:FLOWS_THROUGH]->(g);
+
+// Add more relationships for existing data
+MATCH (c:Country {name: 'Egypt'}), (a:Continent {name: 'Asia'})
+CREATE (c)-[:LOCATED_IN]->(a);
+
+MATCH (c:Country {name: 'Sudan'}), (cont:Continent {name: 'Africa'})
+CREATE (c)-[:LOCATED_IN]->(cont);
+
+MATCH (c:Country {name: 'Peru'}), (cont:Continent {name: 'South America'})
+CREATE (c)-[:LOCATED_IN]->(cont);
