@@ -63,8 +63,10 @@ To import this dataset into Neo4j, you can use either the `cypher-shell` or `neo
 Using `cypher-shell`:
 
 ```
+(
 NEO4J_PASSWORD=test
-./cypher-shell -u neo4j -p "$NEO4J_PASSWORD" -f example/geo/geo.import.cypher
+cd example/geo && ../../cypher-shell -u neo4j -p "$NEO4J_PASSWORD" -f geo.import.cypher
+)
 ```
 
 Using `neo4j-admin`:
