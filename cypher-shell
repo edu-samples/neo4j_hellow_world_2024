@@ -11,8 +11,17 @@ CURRENT_DIR=$(pwd)
 
 # Run cypher-shell inside Docker
 # Mapping current directory so paths from current directory should work for command.
-docker run --rm -it --network host \
-  -v "$CURRENT_DIR:/workspace" \
-  -w /workspace \
-  -e NEO4J_AUTH="$NEO4J_USER/$NEO4J_PASSWORD" \
-  neo4j:latest "$CMD" -a localhost:7687 "$@"
+if [ "$CMD" = "cypher-shell" ]
+then
+  docker run --rm -it --network host \
+    -v "$CURRENT_DIR:/workspace" \
+    -w /workspace \
+    -e NEO4J_AUTH="$NEO4J_USER/$NEO4J_PASSWORD" \
+    neo4j:latest "$CMD" -a localhost:7687 "$@"
+else
+  docker run --rm -it --network host \
+    -v "$CURRENT_DIR:/workspace" \
+    -w /workspace \
+    -e NEO4J_AUTH="$NEO4J_USER/$NEO4J_PASSWORD" \
+    neo4j:latest "$CMD" "$@"
+fi
