@@ -1,4 +1,4 @@
-.PHONY: all cypher-shell run-quick run-basic run-advanced clean clean-quick clean-basic clean-advanced clean-all
+.PHONY: all cypher-shell neo4j-admin run-quick run-basic run-advanced clean clean-quick clean-basic clean-advanced clean-all
 
 all: run-quick # Default target
 
@@ -10,8 +10,13 @@ NEO4J_PASSWORD := test
 cypher-shell:
 	docker run --rm -it --network host \
 	-e NEO4J_AUTH=$(NEO4J_USER)/$(NEO4J_PASSWORD) \
-	neo4j:latest cypher-shell -a localhost:7687
+	neo4j:latest $@ -a localhost:7687
 
+# CLI - Command Line Interface `neo4j-admin`
+neo4j-admin:
+	docker run --rm -it --network host \
+	-e NEO4J_AUTH=$(NEO4J_USER)/$(NEO4J_PASSWORD) \
+	neo4j:latest $@ -a localhost:7687
 
 # Quick start: Run Neo4j with default settings and custom auth
 #
