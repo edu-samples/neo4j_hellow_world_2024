@@ -47,8 +47,8 @@ make stop
 
 ## Default Credentials
 
-- Username: test
-- Password: test
+* Username: neo4j
+* Password: test
 
 You can modify these in the Makefile by changing the `NEO4J_USER` and `NEO4J_PASSWORD` variables.
 
