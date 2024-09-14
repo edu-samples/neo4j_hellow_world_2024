@@ -11,7 +11,11 @@ NEO4J_PASSWORD := test
 #
 # It sets up port mapping and custom authentication but doesn't persist data.
 run-quick:
-	docker run --name test-neor4j-quick -p7474:7474 -p7687:7687 -e NEO4J_AUTH=$(NEO4J_USER)/$(NEO4J_PASSWORD) neo4j:latest
+	docker run \
+	--name test-neor4j-quick -p7474:7474 -p7687:7687 \
+	-e NEO4J_dbms_security_auth__minimum__password__length=2 \
+	-e NEO4J_AUTH=$(NEO4J_USER)/$(NEO4J_PASSWORD) \
+	neo4j:latest
 
 # Basic setup: Run Neo4j with data persistence
 #
@@ -22,6 +26,7 @@ run-basic:
 	--name test-neo4j-basic \
 	--publish=7474:7474 --publish=7687:7687 \
 	--volume=$$HOME/.config/neo4j/data:/data \
+	-e NEO4J_dbms_security_auth__minimum__password__length=2 \
 	-e NEO4J_AUTH=$(NEO4J_USER)/$(NEO4J_PASSWORD) \
 	neo4j:latest
 
@@ -40,6 +45,7 @@ run-advanced:
 	-v $$HOME/.config/neo4j/logs:/logs \
 	-v $$HOME/.config/neo4j/import:/var/lib/neo4j/import \
 	-v $$HOME/.config/neo4j/plugins:/plugins \
+	-e NEO4J_dbms_security_auth__minimum__password__length=2 \
 	-e NEO4J_AUTH=$(NEO4J_USER)/$(NEO4J_PASSWORD)
 	neo4j:latest
 	# https://neo4j.com/developer/docker-run-neo4j/
