@@ -3,7 +3,7 @@
 all: run-quick # Default target
 
 # Neo4j authentication variables
-NEO4J_USER := test
+NEO4J_USER := neo4j
 NEO4J_PASSWORD := test
 
 
