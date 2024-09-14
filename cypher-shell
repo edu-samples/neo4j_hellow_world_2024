@@ -3,8 +3,9 @@
 CMD=$(basename "$0")
 
 # Neo4j authentication variables
-NEO4J_USER="neo4j"
-NEO4J_PASSWORD="test"
+: ${NEO4J_USER:="neo4j"}
+: ${NEO4J_PASSWORD:="test"}
+: ${NEO4J_BOLTADDR:="localhost:7687"}
 
 # Get the current directory
 CURRENT_DIR=$(pwd)
@@ -13,11 +14,30 @@ CURRENT_DIR=$(pwd)
 # Mapping current directory so paths from current directory should work for command.
 if [ "$CMD" = "cypher-shell" ]
 then
+while (( "$#" )); do
+  case "$1" in
+    -a)
+      NEO4J_BOLTADDR="$2"
+      shift 2
+      ;;
+    -u)
+      NEO4J_USER="$2"
+      shift 2
+      ;;
+    -p)
+      NEO4J_PASSWORD="$2"
+      shift 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
   docker run --rm -it --network host \
     -v "$CURRENT_DIR:/workspace" \
     -w /workspace \
     -e NEO4J_AUTH="$NEO4J_USER/$NEO4J_PASSWORD" \
-    neo4j:latest "$CMD" -a localhost:7687 "$@"
+    neo4j:latest "$CMD" -u "$NEO4J_USER" -p "$NEO4J_PASSWORD" -a "$NEO4J_BOLTADDR" "$@"
 else
   docker run --rm -it --network host \
     -v "$CURRENT_DIR:/workspace" \
