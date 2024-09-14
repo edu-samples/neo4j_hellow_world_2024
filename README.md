@@ -52,6 +52,16 @@ make stop
 
 You can modify these in the Makefile by changing the `NEO4J_USER` and `NEO4J_PASSWORD` variables.
 
+## Example Dataset
+
+This repository includes an example geography dataset in the `example/geo` directory. This dataset includes information about continents, countries, cities, and rivers.
+
+To import this dataset into Neo4j, run the following command:
+
+```
+./cypher-shell -u neo4j -p your_password -f example/geo/geo.import.cypher
+```
+
 ## Accessing Neo4j
 
 - Browser interface: http://localhost:7474
